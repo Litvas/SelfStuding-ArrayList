@@ -1,23 +1,23 @@
-package MyArrayList;
+package my_arraylist;
 
 import java.util.*;
 
 
-public class MyArrayList<T> implements List {
+public class MyArrayListImplementation<T> implements List {
 
     int position = 0;
-    private static Object[] objects = new Object[10];
+    public Object[] objects = new Object[10];
 
 
-    public MyArrayList(Object[] objects) {
+    public MyArrayListImplementation(Object[] objects) {
         this.objects = objects;
     }
 
-    public MyArrayList() {
+    public MyArrayListImplementation() {
     }
 
+    // Done! With test.
     @Override
-    // Done!
     public int size() {
         int sizeOfMyArrayList = 0;
         for (int i = 0; i < objects.length - 1; i++) {
@@ -26,8 +26,8 @@ public class MyArrayList<T> implements List {
         return sizeOfMyArrayList;
     }
 
+    // Done! With 2 tests for 2 conditions.
     @Override
-    // Done!
     public boolean isEmpty() {
         boolean isListEmpty = true;
         for (int i = 0; i < objects.length; i++) {
@@ -39,8 +39,8 @@ public class MyArrayList<T> implements List {
         return isListEmpty;
     }
 
-    @Override
     // Uncomplete
+    @Override
     public boolean contains(Object object) {
         boolean isEquals = false;
         for (int i = 0; i < objects.length - 1; i++) {
@@ -57,13 +57,14 @@ public class MyArrayList<T> implements List {
         return null;
     }
 
+    // Done! repair test
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return objects;
     }
 
+    // Done! With test.
     @Override
-    // Done!
     public boolean add(Object objectForPaste) {
         boolean successPaste = false;
         while (successPaste != true) {
@@ -80,7 +81,20 @@ public class MyArrayList<T> implements List {
         return successPaste;
     }
 
-    // Method for change capacity of array. Using by method is add
+    // Done! With test
+    @Override
+    public void add(int index, Object objectForPaste) {
+        if (index < objects.length - 1) {
+            objects[index] = objectForPaste;
+        } else {
+            while (index > objects.length - 1){
+              changeCapacityOfArray();
+            }
+            add(index, objectForPaste);
+        }
+    }
+
+    // Method for change capacity of array. Using by methods are add
     private Object[] changeCapacityOfArray() {
         Object[] arrayForCopy = new Object[objects.length];
         for (int i = 0; i < objects.length - 1; i++) {
@@ -93,6 +107,7 @@ public class MyArrayList<T> implements List {
         }
         return objects;
     }
+
 
     @Override
     public boolean remove(Object o) {
@@ -120,24 +135,20 @@ public class MyArrayList<T> implements List {
 
     }
 
-    @Override
     // Done!
+    @Override
     public Object get(int index) {
         Object object = objects[index];
         return object;
     }
 
-    @Override
     // Done!
+    @Override
     public Object set(int index, Object element) {
         objects[index] = element;
         return objects[index];
     }
 
-    @Override
-    public void add(int index, Object element) {
-
-    }
 
     @Override
     public Object remove(int index) {
@@ -187,8 +198,9 @@ public class MyArrayList<T> implements List {
     }
 
     @Override
-    public T[] toArray(Object[] a) {
-        //todo change return type
-        return null;
+    public Object[] toArray(Object[] objectForReturn) {
+                return objectForReturn;
     }
+
+
 }
