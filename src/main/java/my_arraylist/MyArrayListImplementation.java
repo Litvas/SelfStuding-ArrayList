@@ -6,7 +6,8 @@ import java.util.*;
 public class MyArrayListImplementation<T> implements List {
 
     int position = 0;
-    public Object[] objects = new Object[10];
+    protected Object[] objects = new Object[10];
+    //  protected MyIteratorForList myIteratorForList = new MyIteratorForList();
 
 
     public MyArrayListImplementation(Object[] objects) {
@@ -39,24 +40,6 @@ public class MyArrayListImplementation<T> implements List {
         return isListEmpty;
     }
 
-    // Uncomplete
-    @Override
-    public boolean contains(Object object) {
-        boolean isEquals = false;
-        for (int i = 0; i < objects.length - 1; i++) {
-            if (objects[i].equals(object)) {
-                isEquals = true;
-            }
-        }
-        return isEquals;
-    }
-
-    @Override
-    public Iterator iterator() {
-
-        return null;
-    }
-
     // Done! repair test
     @Override
     public Object[] toArray() {
@@ -87,8 +70,8 @@ public class MyArrayListImplementation<T> implements List {
         if (index < objects.length - 1) {
             objects[index] = objectForPaste;
         } else {
-            while (index > objects.length - 1){
-              changeCapacityOfArray();
+            while (index > objects.length - 1) {
+                changeCapacityOfArray();
             }
             add(index, objectForPaste);
         }
@@ -108,24 +91,40 @@ public class MyArrayListImplementation<T> implements List {
         return objects;
     }
 
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
+    // Done! With test.
     @Override
     public boolean addAll(Collection c) {
-        return false;
+        boolean success = false;
+        Object[] cToArray = (Object[]) c.toArray();
+        for (int i = 0; i < cToArray.length - 1; i++) {
+            success = add(cToArray[i]);
+        }
+        return success;
     }
 
+    // Done! Without test
     @Override
     public boolean addAll(int index, Collection c) {
-        return false;
+        boolean success = false;
+        Object[] cToArray = (Object[]) c.toArray();
+        for (int i = index; i < cToArray.length - 1; i++) {
+            while (success != true) {
+                if (objects[index] == null & index < objects.length - 1) {
+                    objects[index] = cToArray[i];
+                    index++;
+                    success = true;
+                } else if (index == objects.length - 1 & success == false) {
+                    index = objects.length - 1;
+                    changeCapacityOfArray();
+                    success = false;
+                }
+            }
+        }
+        return success;
     }
 
+    // Done! With tests for 2 conditions
     @Override
-    // Done!
     public void clear() {
         for (int i = 0; i < objects.length - 1; i++) {
             if (objects[i] != null) {
@@ -135,25 +134,44 @@ public class MyArrayListImplementation<T> implements List {
 
     }
 
-    // Done!
+    // Done! With test
     @Override
     public Object get(int index) {
         Object object = objects[index];
         return object;
     }
 
-    // Done!
+    // Done! With 2 tests for different conditions about capacity;
     @Override
     public Object set(int index, Object element) {
+        if (index > objects.length - 1) {
+            while (index > objects.length - 1) {
+                changeCapacityOfArray();
+            }
+        }
         objects[index] = element;
         return objects[index];
     }
 
-
+    // Done! With test!
     @Override
     public Object remove(int index) {
         objects[index] = null;
         return null;
+    }
+
+    // Done! With test for 2 condition!
+    // This method needs in overriding method "equals"
+    @Override
+    public boolean remove(Object object) {
+        boolean remove = false;
+        for (int i = 0; i < objects.length - 1; i++) {
+            if (objects[i] == object) {
+                objects[i] = null;
+                remove = true;
+            }
+        }
+        return remove;
     }
 
     @Override
@@ -198,9 +216,61 @@ public class MyArrayListImplementation<T> implements List {
     }
 
     @Override
-    public Object[] toArray(Object[] objectForReturn) {
-                return objectForReturn;
+    public Object[] toArray(Object[] objects) {
+        return objects;
+    }
+
+    @Override
+    public Iterator iterator() {
+        MyIteratorForList myIteratorForList = new MyIteratorForList();
+        return myIteratorForList;
+    }
+
+    // Uncomplete
+    @Override
+    public boolean contains(Object object) {
+        boolean isEquals = false;
+        for (int i = 0; i < objects.length - 1; i++) {
+            if (objects[i].equals(object)) {
+                isEquals = true;
+            }
+        }
+        return isEquals;
     }
 
 
+
+
+
+
+
+    protected class MyIteratorForList implements Iterator {
+
+        int position = 0;
+
+        public MyIteratorForList() {
+        }
+
+        @Override
+        public boolean hasNext() {
+            boolean itHasNext;
+            for (int i = 0; i < objects.length - 1; i++) {
+                System.out.println(objects[i]);
+            }
+            if (objects[position + 1] == null) {
+                itHasNext = false;
+            } else itHasNext = true;
+            return itHasNext;
+        }
+
+        @Override
+        public Object next() {
+            return null;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+    }
 }
