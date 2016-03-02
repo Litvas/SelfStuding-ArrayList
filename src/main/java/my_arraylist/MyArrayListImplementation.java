@@ -1,6 +1,9 @@
 package my_arraylist;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 
 public class MyArrayListImplementation<T> implements List {
@@ -9,6 +12,7 @@ public class MyArrayListImplementation<T> implements List {
     protected Object[] objects = new Object[10];
     //  protected MyIteratorForList myIteratorForList = new MyIteratorForList();
 
+    //  MyIteratorForList myIteratorForList = new MyIteratorForList();
 
     public MyArrayListImplementation(Object[] objects) {
         this.objects = objects;
@@ -175,13 +179,26 @@ public class MyArrayListImplementation<T> implements List {
     }
 
     @Override
-    public int indexOf(Object o) {
-        return 0;
+    public int indexOf(Object object) {
+        int index = -1;
+        for (int i = 0; i < objects.length - 1; i++) {
+            if (objects[i] == object) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     @Override
-    public int lastIndexOf(Object o) {
-        return 0;
+    public int lastIndexOf(Object object) {
+        int index = -1;
+        for (int i = 0; i < objects.length - 1; i++) {
+            if (objects[i] == object) {
+                index = i;
+            }
+        }
+        return index;
     }
 
     @Override
@@ -220,57 +237,71 @@ public class MyArrayListImplementation<T> implements List {
         return objects;
     }
 
+    // Done! With test
     @Override
-    public Iterator iterator() {
+    public MyIteratorForList iterator() {
         MyIteratorForList myIteratorForList = new MyIteratorForList();
         return myIteratorForList;
     }
 
-    // Uncomplete
+    // Done! With test for 2 conditions!
     @Override
     public boolean contains(Object object) {
         boolean isEquals = false;
         for (int i = 0; i < objects.length - 1; i++) {
-            if (objects[i].equals(object)) {
+            if (objects[i] == object) {
                 isEquals = true;
+                break;
             }
         }
         return isEquals;
     }
 
-
-
-
-
-
-
     protected class MyIteratorForList implements Iterator {
 
-        int position = 0;
+        private int position;
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        MyArrayListImplementation myArrayListImplementation = new MyArrayListImplementation();
 
         public MyIteratorForList() {
         }
 
+        // Done! This method work is incorrect! Fix this
         @Override
         public boolean hasNext() {
             boolean itHasNext;
-            for (int i = 0; i < objects.length - 1; i++) {
-                System.out.println(objects[i]);
-            }
-            if (objects[position + 1] == null) {
-                itHasNext = false;
-            } else itHasNext = true;
+            if (position + 1 != objects.length - 1) {
+                if (objects[position + 1] != null) {
+                    itHasNext = true;
+                } else itHasNext = false;
+            } else itHasNext = false;
+            setPosition(position);
             return itHasNext;
         }
 
+        // Done! This method work is incorrect! Fix this
         @Override
         public Object next() {
-            return null;
+            Object objectForReturn;
+            if (hasNext() == true) {
+                objectForReturn = objects[position + 1];
+            } else objectForReturn = "This haven`t next element";
+            if (position == objects.length - 1) objectForReturn = "It`s last element";
+            return objectForReturn;
         }
 
+        // Done! Without test!
         @Override
         public void remove() {
-
+            myArrayListImplementation.remove(position);
         }
     }
 }

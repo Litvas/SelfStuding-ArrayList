@@ -4,18 +4,16 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class MyArrayListImplementationTest {
 
     Integer integer = new Integer("23");
     Integer integer2 = new Integer("24");
+    Integer integer3 = new Integer("25");
     MyArrayListImplementation myArrayListImplementation = new MyArrayListImplementation();
     MyArrayListImplementation myArrayListImplementationEmpty = new MyArrayListImplementation();
     ArrayList<Boolean> arrayList = new ArrayList<Boolean>();
-    // MyArrayListImplementation.MyIteratorForList myIteratorForList = new MyArrayListImplementation.MyIteratorForList();
-    Iterator iterator = myArrayListImplementation.iterator();
-
+    MyArrayListImplementation.MyIteratorForList myIteratorForList = (MyArrayListImplementation.MyIteratorForList) new MyArrayListImplementation().iterator();
 
     public MyArrayListImplementationTest() {
     }
@@ -27,7 +25,7 @@ public class MyArrayListImplementationTest {
     @Test
     public void testAddWithParametrs() {
         myArrayListImplementation.add(150, integer);
-        System.out.println(myArrayListImplementation.get(150));
+   //     System.out.println(myArrayListImplementation.get(150));
     }
 
     @Test
@@ -121,8 +119,53 @@ public class MyArrayListImplementationTest {
     }
 
     @Test
-    public void testIterator() {
+    public void testIteratorHasNext() {
+        myIteratorForList.setPosition(174);
+        for (int i = 0; i < 15; i++) {
+            myArrayListImplementation.add(i);
+        }
+                Assert.assertTrue(myArrayListImplementation.iterator().hasNext());
+    }
 
+    @Test
+    public void testIteratorNext() {
+        for (int i = 0; i < 5; i++) {
+            myArrayListImplementation.add(integer);
+        }
+        Assert.assertEquals(integer, myArrayListImplementation.iterator().next());
+        myIteratorForList.setPosition(150);
+      //  System.out.println(myArrayListImplementation.iterator().next()+ ") "+ myIteratorForList.getPosition());
+
+    }
+
+    @Test
+    public void testContains() {
+        for (int i = 0; i < 5; i++) {
+            myArrayListImplementation.add(integer);
+        }
+        Assert.assertTrue(myArrayListImplementation.contains(integer));
+       Assert.assertFalse(myArrayListImplementation.contains(integer2));
+    }
+
+    @Test
+    public void testIndexOf() {
+        for (int i = 0; i < 5; i++) {
+            myArrayListImplementation.add(integer);
+        }
+        myArrayListImplementation.add(integer2);
+        Assert.assertEquals(0, myArrayListImplementation.indexOf(integer));
+        Assert.assertEquals(5, myArrayListImplementation.indexOf(integer2));
+        Assert.assertEquals(-1, myArrayListImplementation.indexOf(integer3));
+    }
+
+    @Test
+    public void testLastIndexOf() {
+        for (int i = 0; i < 5; i++) {
+            myArrayListImplementation.add(integer);
+        }
+        myArrayListImplementation.add(integer2);
+        Assert.assertEquals(4, myArrayListImplementation.lastIndexOf(integer));
+        Assert.assertEquals(-1, myArrayListImplementation.lastIndexOf(integer3));
     }
 
 }
