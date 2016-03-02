@@ -178,6 +178,7 @@ public class MyArrayListImplementation<T> implements List {
         return remove;
     }
 
+    // Done! with test.
     @Override
     public int indexOf(Object object) {
         int index = -1;
@@ -190,6 +191,7 @@ public class MyArrayListImplementation<T> implements List {
         return index;
     }
 
+    // Done! with test.
     @Override
     public int lastIndexOf(Object object) {
         int index = -1;
@@ -211,25 +213,50 @@ public class MyArrayListImplementation<T> implements List {
         return null;
     }
 
+    // Done! With test.
     @Override
     public List subList(int fromIndex, int toIndex) {
-        return null;
+        MyArrayListImplementation sublist = new MyArrayListImplementation();
+        for (int i = fromIndex; i <= toIndex; i++) {
+            sublist.add(objects[i]);
+        }
+        return sublist;
     }
 
+    // I don`t know of function of this method
     @Override
     public boolean retainAll(Collection c) {
         return false;
     }
 
+    // Done! With test.
     @Override
-    public boolean removeAll(Collection c) {
-
-        return false;
+    public boolean removeAll(Collection collection) {
+        Object[] objectsCollection = collection.toArray();
+        boolean deleted = false;
+        for (int i = 0; i < objectsCollection.length - 1; i++) {
+            for (int j = 0; j < objects.length - 1; j++) {
+                if (objectsCollection[i] == objects[j]) {
+                    objects[j] = null;
+                    deleted = true;
+                } else deleted =false;
+            }
+        }
+        return deleted;
     }
 
     @Override
-    public boolean containsAll(Collection c) {
-        return false;
+    public boolean containsAll(Collection collection) {
+        Object[] objectsCollection = collection.toArray();
+        boolean contains = false;
+        for (int i = 0; i < objectsCollection.length - 1; i++) {
+            for (int j = 0; j < objects.length - 1; j++) {
+                if (objectsCollection[i] == objects[j]) {
+                    contains = true;
+                }else contains = false;
+            }
+        }
+        return contains;
     }
 
     @Override
